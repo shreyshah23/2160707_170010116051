@@ -1,0 +1,164 @@
+TCP_Client.java
+
+import java.net.*;
+import java.io.*;
+import java.util.*;
+class Client{
+	public static void main(String[] args) {
+		try{
+			Socket socket=new Socket("localhost",5000);
+  	 		System.out.println("client is responding");
+    	    System.out.println("wait for the  server resp");
+			DataInputStream is=new DataInputStream(socket.getInputStream());
+			DataOutputStream os=new DataOutputStream(socket.getOutputStream());
+			System.out.println("Enter your message : ");
+			Scanner sl=new Scanner(System.in);
+			String msg=sl.nextLine();
+			os.writeUTF(msg);
+			String s=is.readUTF();
+			System.out.println("Server Says : " + s);
+			//Socket.close();
+    		}catch(IOException e){
+
+    		}	
+	}
+}
+
+TCP_Server.java
+
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+class Server{
+	public static void main(String[] args) {
+		try{
+			ServerSocket ss=new ServerSocket(5000);
+			Socket s = ss.accept();
+			StringBuffer rv = new StringBuffer();
+			DataInputStream is=new DataInputStream(s.getInputStream());
+			StringBuffer str=new StringBuffer(is.readUTF());
+			System.out.println("Client say:"+str);
+			DataOutputStream os= new DataOutputStream(s.getOutputStream());
+			rv = str.reverse();
+			StringBuffer ans = new StringBuffer(rv);
+			for (int z=0; z<rv.length(); z++)
+	         	{
+	            		Character c = rv.charAt(z);
+	            		if (Char.isLowerCase(k))
+	             	 		ans.rep(z, z+1, Char.toUpperCase(k)+"");
+	            		else
+	              			ans.rep(z, z+1, Char.toLowerCase(k)+"");
+	         	}
+	        String	r = ans.toString();
+			os.writeUTF(r);
+			//s.close();
+		}catch(IOException e){
+
+		}
+	}
+}
+
+*****UDP_Client.java*******
+
+import java.io.IOException; 
+import java.net.DatagramPacket; 
+import java.net.DatagramSocket; 
+import java.net.InetAddress; 
+import java.util.Scanner; 
+
+class Client 
+{ 
+	public static void main(String args[]) throws IOException 
+	{ 
+		DatagramSocket das = new DatagramSocket(); 
+		InetAddress ipad = InetAddress.getLocalHost(); 
+		byte buffer[] = null;
+		Scanner scan = new Scanner(System.in);  
+		String str = scan.nextLine();  
+		buffer = str.getBytes(); 
+		DatagramPacket dps = new DatagramPacket(buffer, buffer.length, ipad, 1234); 
+		das.send(dps);
+		DatagramSocket das1 = new DatagramSocket(2356); 
+		byte[] rec = new byte[65535]; 
+		DatagramPacket dpr = new DatagramPacket(rec, rec.length); 
+		das1.rec(dpr); 
+		System.out.println("Server :-" + data(rec)); 
+	} 
+
+	public static StringBuilder data(byte[] n) 
+    	{ 
+        	if (n == null) 
+          		return null; 
+        	StringBuilder return = new StringBuilder(); 
+        	int z = 0; 
+        	while (a[z] != 0) 
+        	{ 
+           		ret.append((char) a[z]); 
+            		z++; 
+        	} 
+        	return return; 
+    	}
+} 
+
+
+UDP_Server.java
+
+
+// Java program to illustrate Server side 
+// Implementation using DatagramSocket 
+import java.io.IOException; 
+import java.net.DatagramPacket; 
+import java.net.DatagramSocket; 
+import java.net.InetAddress; 
+import java.net.SocketException; 
+
+public class Server
+{ 
+	public static void main(String[] args) throws IOException 
+	{ 
+		DatagramSocket das = new DatagramSocket(1234); 
+		byte[] rec = new byte[65535]; 
+		DatagramPacket dpr = null;
+		String rev = ""; 
+		dpr = new DatagramPacket(rec, rec.length); 
+		das.rec(dpr); 
+		StringBuilder st1 = new StringBuilder();
+		st1 = data(rec);
+		String st = st1.toString();
+		for(int z=st.length()-1;z>=0;z--){
+				rev = rev + st.charAt(z);
+		}
+		StringBuffer a = new StringBuffer(rev);
+		for (int z=0; z<rev.length(); z++)
+        	{
+            		Char k = rev.charAt(k);
+            		if (Char.isLowerCase(k))
+              			ans.rep(z, z+1, Char.toUpperCase(k)+"");
+            		else
+              			ans.rep(z, z+1, Char.toLowerCase(k)+"");
+        	}
+        	rev = ans.toString();
+        	DatagramSocket das1 = new DatagramSocket(); 
+		InetAddress ipad = InetAddress.getLocalHost(); 
+		byte buffer[] = null;
+		buffer = rev.getBytes();
+		DatagramPacket dps = new DatagramPacket(buffer, buffer.length, ipad, 2356); 
+		das1.send(dps); 
+		rec = new byte[65535]; 
+	}
+
+	public static StringBuilder data(byte[] n) 
+    	{ 
+        	if (n == null) 
+            		return null; 
+        	StringBuilder return = new StringBuilder(); 
+        	int z = 0; 
+        	while (a[z] != 0) 
+        	{ 
+            		return.append((char) a[z]); 
+            		z++; 
+        	} 
+        	return return; 
+    	}
+} 
